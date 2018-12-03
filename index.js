@@ -1,4 +1,12 @@
 CKData.fetchData("MERGE Ponti").then((value) => {
+
+    var tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+            return "<strong>Bridge Name: </strong> <span style='color:#ffa900'>" + d.BridgeName + "</span>";
+        });
+
     let jsonData = value;
     let data = getBridgeData(jsonData);
 
@@ -61,7 +69,9 @@ CKData.fetchData("MERGE Ponti").then((value) => {
                 {
                     return height2 - y2(d.Height);
                 },
-                width: function(d){ return x.rangeBand()},
+                width: function(d){
+                    return x.rangeBand()
+                },
                 x: function(d) {
 
                     return x2(d.Bridge);
@@ -83,6 +93,11 @@ CKData.fetchData("MERGE Ponti").then((value) => {
         .selectAll("rect")
         .attr("y", -6)
         .attr("height", height2 + 7);
+
+    focus.call(tip);
+    focus.selectAll(".bar")
+        .on("mouseover", tip.show)
+        .on("mouseout", tip.hide);
 
 
     function brushed() {
@@ -152,7 +167,6 @@ CKData.fetchData("MERGE Ponti").then((value) => {
                         return y(d.Height)
                     }
                 })
-
     }
 
     function exit(data) {
@@ -164,8 +178,14 @@ CKData.fetchData("MERGE Ponti").then((value) => {
         x.domain(data.map(function(d){ return d.Bridge}));
         y.domain([0, d3.max(data, function(d) { return d.Height;})]);
 
+        focus.call(tip);
+        focus.selectAll(".bar")
+            .on("mouseover", tip.show)
+            .on("mouseout", tip.hide);
+
         var bars =  focus.selectAll('.bar')
             .data(data);
+
         bars.enter().append("rect")
             .classed('bar', true)
             .attr(
@@ -175,6 +195,7 @@ CKData.fetchData("MERGE Ponti").then((value) => {
                         return height - y(d.Height);
                     },
                     width: function(d){
+                        console.log();
                         return x.rangeBand()
                     },
                     x: function(d) {
@@ -185,13 +206,13 @@ CKData.fetchData("MERGE Ponti").then((value) => {
                     {
                         return y(d.Height)
                     }
-                })
+                });
     }
 
     /**
-     * Parses through the jsonData and extracts bridge name and height
+     * Parses thru jsonData to prepare the data array for processing
      * @param jsonData
-     * @returns {*} An array of {Bridge name, Bridge height} objects
+     * @returns {*} An array of objects containing data neccececary to draw the graph
      */
     function getBridgeData(jsonData) {
         let data = [];
@@ -212,12 +233,13 @@ CKData.fetchData("MERGE Ponti").then((value) => {
 
                 datum.Bridge = i;
                 datum.Height = cumulativeHeight;
+                datum.BridgeName = jsonData[i]["Bridge Name"];
+                datum.Data = jsonData[i];
                 data.push(datum);
             }
         }
         return data;
     }
-
 
 }, (reason) => {
     console.log(reason);
