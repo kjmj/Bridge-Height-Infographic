@@ -3,7 +3,6 @@ svg {
 }
 
 .bar {
-    fill: steelblue;
     clip-path: url(#clip);
 }
 

@@ -97,6 +97,13 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
 
     focus.call(tip);
     focus.selectAll(".bar")
+        .attr('fill', (d) => {
+            if (d.accessibility === 'FALSE') {
+                return '#ff0000';
+            } else {
+                return '#48db52';
+            }
+        })
         .on("mouseover", tip.show)
         .on("mouseout", tip.hide);
 
@@ -151,6 +158,13 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
         bars
             .attr(
                 {
+                    fill: (d) => {
+                        if (d.accessibility === 'FALSE') {
+                            return '#ff0000';
+                        } else {
+                            return '#48db52';
+                        }
+                    },
                     height: function (d)
                     {
                         return height - y(d.Height);
@@ -216,15 +230,14 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
      */
     function getBridgeData(jsonData) {
         let data = [];
-
         for (let i = 0; i < jsonData.length; i++) {
             let datum = {};
             let height = parseFloat(jsonData[i]["Height Center (m)"]);
-
             // skip bridges with no height value and unreasonable heights
             if(height !== 0 && height < 50) {
                 datum.Height = height;
                 datum.BridgeName = jsonData[i]["Bridge Name"];
+                datum.accessibility = jsonData[i]['Handicapped Accessible?'];
                 datum.Data = jsonData[i];
                 data.push(datum);
             }
@@ -239,7 +252,6 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
                 continue;
             }
             const height = data[i].Height;
-            console.log(height);
             data[i].Height = data[i-1].Height + height;
             data[i].Bridge = i;
         }
