@@ -6,6 +6,10 @@ svg {
     clip-path: url(#clip);
 }
 
+h2 {
+    width: 100%;
+}
+
 .bar:hover {
     fill: #F5CC3B;
     clip-path: url(#clip);
