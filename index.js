@@ -6,8 +6,11 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
         .attr('class', 'd3-tip')
         .offset([-10, 0])
         .html(function(d) {
-            return "<strong>Bridge Name: </strong> <span style='color:#ffa900'>" + d.BridgeName + "</span>";
+            return "<strong>Bridge Name: </strong> <span style='color:#ffffff'>" + d.BridgeName + "</span> <br></br>" +
+                "<strong>Bridge Height: </strong> <span style='color:#ffffff'>" + d.height + " meters" +"</span><br></br>" +
+                "<strong>Canal Crossed: </strong> <span style='color:#ffffff'>" + d.canalCrossed + "</span>";
         });
+
 
     let data = getBridgeData(jsonData);
 
@@ -81,7 +84,8 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
                 {
                     return y2(d.Height)
                 }
-            });
+            })
+    ;
 
     context.append("g")
         .attr("class", "x axis")
@@ -136,7 +140,6 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
 
     function updateScale(data) {
         let tickScale = d3.scale.pow().range([data.length / 10, 0]).domain([data.length, 0]).exponent(.5);
-
         let brushValue = brush.extent()[1] - brush.extent()[0];
         if(brushValue === 0){
             brushValue = width;
@@ -180,11 +183,18 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
                     {
                         return y(d.Height)
                     }
-                })
+                });
     }
 
     function exit(data) {
-        let bars =  focus.selectAll('.bar').data(data);
+        let bars =  focus.selectAll('.bar').data(data)
+            .attr('fill', (d) => {
+            if (d.accessibility === 'FALSE') {
+                return '#ff0000';
+            } else {
+                return '#48db52';
+            }
+        });
         bars.exit().remove()
     }
 
@@ -198,7 +208,14 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
             .on("mouseout", tip.hide);
 
         let bars =  focus.selectAll('.bar')
-            .data(data);
+            .data(data)
+            .attr('fill', (d) => {
+                if (d.accessibility === 'FALSE') {
+                    return '#ff0000';
+                } else {
+                    return '#48db52';
+                }
+            });
 
         bars.enter().append("rect")
             .classed('bar', true)
@@ -238,7 +255,9 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
                 datum.Height = height;
                 datum.BridgeName = jsonData[i]["Bridge Name"];
                 datum.accessibility = jsonData[i]['Handicapped Accessible?'];
-                datum.Data = jsonData[i];
+                datum.height = jsonData[i]['Height Center (m)'];
+                datum.canalCrossed = jsonData[i]['Canal Crossed'];
+                // datum.Data = jsonData[i];
                 data.push(datum);
             }
         }
