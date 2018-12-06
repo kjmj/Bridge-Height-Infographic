@@ -7,13 +7,42 @@ svg {
 }
 
 .bar:hover {
-    fill: #ffa900;
+    fill: #F5CC3B;
     clip-path: url(#clip);
 }
 
 .subBar {
     fill: gray;
     opacity: 0.5;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    width: 100%;
+}
+
+#visuals {
+    /*display: flex;*/
+    /*flex: 0 0 100%;*/
+    /*flex-direction: row;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+}
+
+#map, #pano {
+    float: right;
+    height: 500px;
+    width: 750px;
+    /*display: block;*/
+    /*position: relative;*/
+    /*width: 45%;*/
+    /*max-height: 95%;*/
+    /*margin: 5% 5% 5% 5%;*/
 }
 
 .axis path,

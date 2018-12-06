@@ -1,6 +1,6 @@
-document.body.innerHTML = '<p> Loading data';
+document.getElementById("barchart").innerHTML = "Loading data...";
 CKData.fetchData("MERGE Ponti").then((jsonData) => {
-    document.body.innerHTML = '';
+    document.getElementById("barchart").innerHTML = "";
 
     let tip = d3.tip()
         .attr('class', 'd3-tip')
@@ -38,9 +38,16 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
         .x(x2)
         .on("brush", brushed);
 
-    let svg = d3.select("body").append("svg")
+    let svg = d3.select("#barchart").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
+
+    svg.append('g')
+        .attr('transform', `translate(10, ${height / 1.5})`) // credit to mjbtfan & muggleman1
+        .append('text')
+        .attr('text-anchor', 'center')
+        .attr('transform', 'rotate(270)')
+        .text("Cumulative Height");
 
     let focus = svg.append("g")
         .attr("class", "focus")
@@ -58,6 +65,8 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
     focus.append("g")
         .attr("class", "y axis")
         .call(yAxis);
+
+
 
     enter(data);
     updateScale(data);
@@ -103,14 +112,18 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
     focus.selectAll(".bar")
         .attr('fill', (d) => {
             if (d.accessibility === 'FALSE') {
-                return '#ff0000';
+                return '#DB3840';
             } else {
-                return '#48db52';
+                return '#82C44D';
             }
         })
         .on("mouseover", tip.show)
-        .on("mouseout", tip.hide);
-
+        .on("mouseout", tip.hide)
+        .on("click", (d) => {
+            console.log("Lat: " + d.latitude);
+            console.log("Lng: " + d.longitude);
+            drawStreetView(parseFloat(d.latitude), parseFloat(d.longitude));
+        });
 
     function brushed() {
         let selected =  x2.domain()
@@ -145,8 +158,8 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
             brushValue = width;
         }
 
-        let tickValueMultiplier = Math.ceil(Math.abs(tickScale(brushValue)));
-        let filteredTickValues = data.filter(function(d, i){return i % tickValueMultiplier === 0}).map(function(d){ return d.Bridge});
+        let tickValueMultiplier = 0;
+        let filteredTickValues = 0;
 
         focus.select(".x.axis").call(xAxis.tickValues(filteredTickValues));
         focus.select(".y.axis").call(yAxis);
@@ -163,9 +176,9 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
                 {
                     fill: (d) => {
                         if (d.accessibility === 'FALSE') {
-                            return '#ff0000';
+                            return '#DB3840';
                         } else {
-                            return '#48db52';
+                            return '#82C44D';
                         }
                     },
                     height: function (d)
@@ -190,9 +203,9 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
         let bars =  focus.selectAll('.bar').data(data)
             .attr('fill', (d) => {
             if (d.accessibility === 'FALSE') {
-                return '#ff0000';
+                return '#DB3840';
             } else {
-                return '#48db52';
+                return '#82C44D';
             }
         });
         bars.exit().remove()
@@ -205,15 +218,20 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
         focus.call(tip);
         focus.selectAll(".bar")
             .on("mouseover", tip.show)
-            .on("mouseout", tip.hide);
+            .on("mouseout", tip.hide)
+            .on("click", (d) => {
+                console.log("Lat: " + d.latitude);
+                console.log("Lng: " + d.longitude);
+                drawStreetView(parseFloat(d.latitude), parseFloat(d.longitude));
+            });
 
         let bars =  focus.selectAll('.bar')
             .data(data)
             .attr('fill', (d) => {
                 if (d.accessibility === 'FALSE') {
-                    return '#ff0000';
+                    return '#DB3840';
                 } else {
-                    return '#48db52';
+                    return '#82C44D';
                 }
             });
 
@@ -257,6 +275,9 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
                 datum.accessibility = jsonData[i]['Handicapped Accessible?'];
                 datum.height = jsonData[i]['Height Center (m)'];
                 datum.canalCrossed = jsonData[i]['Canal Crossed'];
+                datum.longitude = jsonData[i]['Longitude'];
+                datum.latitude = jsonData[i]['Latitude'];
+
                 // datum.Data = jsonData[i];
                 data.push(datum);
             }

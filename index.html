@@ -7,7 +7,23 @@
     <!--<script src="CKData.js"></script>-->
     <!--<meta charset="UTF-8">-->
 </head>
+
 <body>
-<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-<script src="CKData.js"></script>
-<script src="index.js"></script>
+    <header id = "header">
+        <h1>Bridges in Venice</h1>
+        <h2>This graph shows the cumulative height of all the bridges in Venice.</h2>
+        <h2>Green bars are handicap accessible, while red ones are not.</h2>
+    </header>
+
+    <div id = "visuals">
+        <span id="barchart"></span>
+        <span id="pano"></span>
+        <!--<span id="map"></span>-->
+    </div>
+
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAyOAA9mi5u_6cH_5TNoOYFIyPzT3q3mpA&sensor=false"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <script src="CKData.js"></script>
+    <script src="Map.js"></script>
+    <script src="index.js"></script>
+</body>
