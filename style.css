@@ -6,7 +6,11 @@ svg {
     clip-path: url(#clip);
 }
 
-h2 {
+#barchart {
+    color: white;
+}
+header, h2 {
+    color: white;
     width: 100%;
 }
 
@@ -24,11 +28,9 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    background: #1B212C;
 }
 
-.header {
-    width: 100%;
-}
 
 #visuals {
     /*display: flex;*/
@@ -38,10 +40,16 @@ html, body {
     /*height: 100%;*/
 }
 
+/*#tick {*/
+    /*fill: white;*/
+/*}*/
+
 #map, #pano {
     float: right;
-    height: 500px;
-    width: 750px;
+    bottom: 0;
+    height: 36vw;
+    width: 50%;
+    /*width: 750px;*/
     /*display: block;*/
     /*position: relative;*/
     /*width: 45%;*/
@@ -52,7 +60,7 @@ html, body {
 .axis path,
 .axis line {
     fill: none;
-    stroke: #000;
+    stroke: white;
     shape-rendering: crispEdges;
 }
 

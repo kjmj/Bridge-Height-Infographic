@@ -39,15 +39,17 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
         .on("brush", brushed);
 
     let svg = d3.select("#barchart").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
+        .attr("width", "50%")
+        .attr("height", "36vw")
+        .attr("viewBox", '0 0 ' + (width + margin.left + margin.right) + ' ' + (height + margin.top + margin.bottom));
 
     svg.append('g')
         .attr('transform', `translate(10, ${height / 1.5})`) // credit to mjbtfan & muggleman1
         .append('text')
         .attr('text-anchor', 'center')
         .attr('transform', 'rotate(270)')
-        .text("Cumulative Height");
+        .text("Cumulative Height")
+        .style('fill', 'white');
 
     let focus = svg.append("g")
         .attr("class", "focus")
@@ -69,7 +71,7 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
 
 
     enter(data);
-    updateScale(data);
+    updateScale();
 
     let subBars = context.selectAll('.subBar')
         .data(data);
@@ -148,21 +150,14 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
         update(updatedData);
         enter(updatedData);
         exit(updatedData);
-        updateScale(updatedData)
+        updateScale()
     }
 
-    function updateScale(data) {
-        let tickScale = d3.scale.pow().range([data.length / 10, 0]).domain([data.length, 0]).exponent(.5);
-        let brushValue = brush.extent()[1] - brush.extent()[0];
-        if(brushValue === 0){
-            brushValue = width;
-        }
-
+    function updateScale() {
         let tickValueMultiplier = 0;
-        let filteredTickValues = 0;
 
-        focus.select(".x.axis").call(xAxis.tickValues(filteredTickValues));
-        focus.select(".y.axis").call(yAxis);
+        focus.select(".x.axis").call(xAxis.tickValues(tickValueMultiplier));
+        focus.select(".y.axis").call(yAxis).style("fill", "white");
     }
 
     function update(data) {
