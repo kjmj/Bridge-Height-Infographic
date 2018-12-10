@@ -11,12 +11,17 @@
 <body>
     <header id = "header">
         <h1>Bridges in Venice</h1>
-        <h2>This graph shows the cumulative height of all the bridges in Venice. Green bars represent a bridge that is handicap accessible, while red bars are not.</h2>
+        <h2>This graph shows the cumulative height of all the bridges in Venice.</h2>
+        <div id="key">
+            <h3>Key</h3>
+            <span class='red'>This bridge is not handicapped accessible</span>
+            <span class='green'>This bridge is handicapped accessible</span>
+        </div>
     </header>
 
     <div id = "visuals">
         <span id="barchart"></span>
-        <span id="pano"></span>
+        <span id="pano">Click a bar for the streetview!</span>
         <!--<span id="map"></span>-->
     </div>
 

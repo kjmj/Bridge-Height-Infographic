@@ -1,17 +1,64 @@
+@font-face {
+    font-family: 'Gilroy-Light';
+    src: url('font/Gilroy-Light.ttf');
+}
+@font-face {
+    font-family: 'Gilroy-Black';
+    src: url('font/Gilroy-Black.ttf');
+}
+
 svg {
-    font: 10px sans-serif;
+    font-family: "Gilroy-Light";
+    font-size: 16px;
 }
 
 .bar {
     clip-path: url(#clip);
 }
 
+#key {
+    border: 1px solid white;
+    width: 350px;
+    padding: 10px;
+}
+#key span {
+    display: flex;
+    align-items: center;
+    margin: 1px 3px 0 0;
+}
+span:before {
+    content: "";
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.red:before {
+    width: 20px;
+    height: 20px;
+    background: #DB3840;
+    margin-right: 5px;
+}
+.green:before {
+    width: 20px;
+    height: 20px;
+    background: #82C44D;
+    margin-right: 5px;
+}
+
 #barchart {
     color: white;
+    font-size: 3vw;
 }
 header, h2 {
     color: white;
     width: 100%;
+    font-family: "Gilroy-Light";
+    margin-bottom: 1.5vw;
+}
+
+h3 {
+    margin-bottom: 10px;
+    margin-top: 0;
 }
 
 .bar:hover {
@@ -29,32 +76,18 @@ html, body {
     margin: 0;
     padding: 0;
     background: #1B212C;
+    font-family: "Gilroy-Light";
 }
-
-
-#visuals {
-    /*display: flex;*/
-    /*flex: 0 0 100%;*/
-    /*flex-direction: row;*/
-    /*width: 100%;*/
-    /*height: 100%;*/
-}
-
-/*#tick {*/
-    /*fill: white;*/
-/*}*/
 
 #map, #pano {
     float: right;
     bottom: 0;
     height: 36vw;
     width: 50%;
-    /*width: 750px;*/
-    /*display: block;*/
-    /*position: relative;*/
-    /*width: 45%;*/
-    /*max-height: 95%;*/
-    /*margin: 5% 5% 5% 5%;*/
+    text-align: center;
+    color: white;
+    font-size: 3vw;
+    z-index: 0;
 }
 
 .axis path,
@@ -62,6 +95,7 @@ html, body {
     fill: none;
     stroke: white;
     shape-rendering: crispEdges;
+
 }
 
 .brush .extent {

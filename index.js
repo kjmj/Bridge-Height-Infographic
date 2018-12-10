@@ -14,8 +14,8 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
 
     let data = getBridgeData(jsonData);
 
-    let margin = {top: 10, right: 10, bottom: 100, left: 40},
-        margin2 = {top: 430, right: 10, bottom: 20, left: 40},
+    let margin = {top: 10, right: 10, bottom: 100, left: 70},
+        margin2 = {top: 430, right: 10, bottom: 20, left: 70},
         width = 750 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom,
         height2 = 500 - margin2.top - margin2.bottom;
@@ -28,6 +28,7 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
     let xAxis = d3.svg.axis().scale(x).orient("bottom"),
         xAxis2 = d3.svg.axis().scale(x2).orient("bottom").tickValues([]),
         yAxis = d3.svg.axis().scale(y).orient("left");
+
 
     x.domain(data.map(function(d){ return d.Bridge}));
     y.domain([0, d3.max(data, function(d) { return d.Height;})]);
@@ -44,7 +45,7 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
         .attr("viewBox", '0 0 ' + (width + margin.left + margin.right) + ' ' + (height + margin.top + margin.bottom));
 
     svg.append('g')
-        .attr('transform', `translate(10, ${height / 1.5})`) // credit to mjbtfan & muggleman1
+        .attr('transform', `translate(20, ${height / 1.5})`) // credit to mjbtfan & muggleman1
         .append('text')
         .attr('text-anchor', 'center')
         .attr('transform', 'rotate(270)')
