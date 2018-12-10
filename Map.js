@@ -1,20 +1,21 @@
-function drawStreetView(latitude, longitude) {
+function drawStreetView(latitude, longitude, bridgeName) {
     if (isNaN(latitude) || isNaN(longitude) || !latitude || !longitude) {
-        const location = document.getElementById('pano');
-        location.innerHTML = '<p> Bridge coordinates have not been surveyed';
-        location.style['background-color'] = null;
+        const location = document.getElementById('pano-title');
+        location.innerHTML = 'The ' + bridgeName + '\'s coordinates have not been surveyed';
+        location.style['background-color'] = 'transparent';
 
+        document.getElementById('pano').innerHTML = "";
+        document.getElementById('pano').style['background-color'] = 'transparent';
         return;
     }
 
-    var bridge = {lat: latitude, lng: longitude};
+    const location = document.getElementById('pano-title');
+    location.innerHTML = bridgeName;
+    location.style['background-color'] = 'transparent';
 
-    // var map = new google.maps.Map(document.getElementById('map'), {
-    //     center: bridge,
-    //     zoom: 14
-    // });
+    let bridge = {lat: latitude, lng: longitude};
 
-    var panorama = new google.maps.StreetViewPanorama(
+    let panorama = new google.maps.StreetViewPanorama(
         document.getElementById('pano'), {
             position: bridge,
             pov: {
@@ -22,6 +23,4 @@ function drawStreetView(latitude, longitude) {
                 pitch: 10
             }
         });
-
-    // map.setStreetView(panorama);
 }

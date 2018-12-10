@@ -123,9 +123,7 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
         .on("mouseover", tip.show)
         .on("mouseout", tip.hide)
         .on("click", (d) => {
-            console.log("Lat: " + d.latitude);
-            console.log("Lng: " + d.longitude);
-            drawStreetView(parseFloat(d.latitude), parseFloat(d.longitude));
+            drawStreetView(parseFloat(d.latitude), parseFloat(d.longitude), d.BridgeName);
         });
 
     function brushed() {
@@ -216,9 +214,7 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
             .on("mouseover", tip.show)
             .on("mouseout", tip.hide)
             .on("click", (d) => {
-                console.log("Lat: " + d.latitude);
-                console.log("Lng: " + d.longitude);
-                drawStreetView(parseFloat(d.latitude), parseFloat(d.longitude));
+                drawStreetView(parseFloat(d.latitude), parseFloat(d.longitude), d.BridgeName);
             });
 
         let bars =  focus.selectAll('.bar')
@@ -240,11 +236,9 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
                         return height - y(d.Height);
                     },
                     width: function() {
-                        console.log();
                         return x.rangeBand()
                     },
                     x: function(d) {
-
                         return x(d.Bridge);
                     },
                     y: function(d)
