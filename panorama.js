@@ -1,3 +1,10 @@
+/**
+ * Draws the streetview from a given latitude and longitude if they are valid. Also modifies HTML to display the name of the bridge.
+ *
+ * @param latitude
+ * @param longitude
+ * @param bridgeName
+ */
 function drawStreetView(latitude, longitude, bridgeName) {
     if (isNaN(latitude) || isNaN(longitude) || !latitude || !longitude) {
         const location = document.getElementById('pano-title');

@@ -2,6 +2,7 @@ document.getElementById("barchart").innerHTML = "Loading data...";
 CKData.fetchData("MERGE Ponti").then((jsonData) => {
     document.getElementById("barchart").innerHTML = "";
 
+    // Tooltip on hover
     let tip = d3.tip()
         .attr('class', 'd3-tip')
         .offset([-10, 0])
@@ -10,7 +11,6 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
                 "<strong>Bridge Height: </strong> <span style='color:#ffffff'>" + d.height + " meters" +"</span><br></br>" +
                 "<strong>Canal Crossed: </strong> <span style='color:#ffffff'>" + d.canalCrossed + "</span>";
         });
-
 
     let data = getBridgeData(jsonData);
 
@@ -39,6 +39,7 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
         .x(x2)
         .on("brush", brushed);
 
+    // Draw SVG
     let svg = d3.select("#barchart").append("svg")
         .attr("width", "50%")
         .attr("height", "36vw")
@@ -249,7 +250,7 @@ CKData.fetchData("MERGE Ponti").then((jsonData) => {
     }
 
     /**
-     * Parses thru jsonData to prepare the data array for processing
+     * Parses through jsonData to prepare the data array for processing
      * @param jsonData
      * @returns {*} An array of objects containing data neccececary to draw the graph
      */

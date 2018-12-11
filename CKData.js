@@ -1,4 +1,4 @@
-// Written by ME, Sam Hale, for a totally separate project
+// Written by Sam Hale, for a totally separate project
 
 /**
  * Helper class that retrieves data from the CK Database
